@@ -19,9 +19,9 @@ sources:
             description: "Revenu généré par la vente de ce produit dans la commande."
           - name: quantity
             description: "Quantité du produit acheté dans la commande."
-            tests:
-              - unique:
-                  column_name: "(orders_id || '-' || pdt_id)"
+        tests:
+          - unique:
+              column_name: "(orders_id || '-' || pdt_id)"
 
       - name: product
         identifier: raw_product
