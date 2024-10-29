@@ -1,4 +1,9 @@
 SELECT 
+s.orders_id,
+s.date_date,
+s.revenue,
+s.quantity,
+
 ROUND((s.quantity * p.purchase_price),2) AS pruchase_cost,
 ROUND((s.revenue - (s.quantity * p.purchase_price)),2) AS margin
 
