@@ -4,7 +4,7 @@ sources:
   - name: raw
     schema: gz_raw_data
     description: "Dataset contenant les données brutes provenant de différentes sources de l'entreprise Greenweez."
-    tables:
+        tables:
       - name: sales
         identifier: raw_gz_sales
         description: "Données sur les ventes de Greenweez. Chaque ligne correspond à un produit acheté dans une commande."
@@ -19,6 +19,15 @@ sources:
             description: "Revenu généré par la vente de ce produit dans la commande."
           - name: quantity
             description: "Quantité du produit acheté dans la commande."
+        tests:
+          - unique:
+              combination_of_columns:
+                - orders_id
+                - pdt_id
+          - not_null:
+              columns:
+                - orders_id
+                - pdt_id
 
       - name: product
         identifier: raw_product
@@ -26,7 +35,10 @@ sources:
         columns:
           - name: products_id
             description: "Identifiant unique du produit dans le catalogue de Greenweez."
-          - name: purchse_price
+            tests:
+              - unique
+              - not_null
+          - name: purchase_price
             description: "Prix d'achat du produit, tel que stocké dans les données brutes."
 
       - name: ship
@@ -35,10 +47,12 @@ sources:
         columns:
           - name: orders_id
             description: "Identifiant unique de la commande liée aux frais de livraison."
+            tests:
+              - unique
+              - not_null
           - name: shipping_fee_1
             description: "Frais de livraison facturés pour la commande."
-          - name: logCost
+          - name: log_cost
             description: "Coût logistique associé à l'expédition de la commande."
           - name: ship_cost
             description: "Coût total de l'expédition de la commande, après conversion en type numérique."
-
