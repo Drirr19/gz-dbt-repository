@@ -4,7 +4,7 @@ sources:
   - name: raw
     schema: gz_raw_data
     description: "Dataset contenant les données brutes provenant de différentes sources de l'entreprise Greenweez."
-        tables:
+    tables:
       - name: sales
         identifier: raw_gz_sales
         description: "Données sur les ventes de Greenweez. Chaque ligne correspond à un produit acheté dans une commande."
@@ -19,15 +19,9 @@ sources:
             description: "Revenu généré par la vente de ce produit dans la commande."
           - name: quantity
             description: "Quantité du produit acheté dans la commande."
-        tests:
-          - unique:
-              combination_of_columns:
-                - orders_id
-                - pdt_id
-          - not_null:
-              columns:
-                - orders_id
-                - pdt_id
+            tests:
+              - unique:
+                  column_name: "(orders_id || '-' || pdt_id)"
 
       - name: product
         identifier: raw_product
