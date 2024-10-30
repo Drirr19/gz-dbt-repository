@@ -1,0 +1,52 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: gz_raw_data
+    description: "Dataset contenant les données brutes provenant de différentes sources de l'entreprise Greenweez."
+    tables:
+      - name: sales
+        identifier: raw_gz_sales
+        description: "Données sur les ventes de Greenweez. Chaque ligne correspond à un produit acheté dans une commande."
+        columns:
+          - name: date_date
+            description: "Date de l'achat de la commande."
+          - name: orders_id
+            description: "Identifiant unique de la commande."
+          - name: pdt_id
+            description: "Identifiant unique du produit acheté dans la commande."
+          - name: revenue
+            description: "Revenu généré par la vente de ce produit dans la commande."
+          - name: quantity
+            description: "Quantité du produit acheté dans la commande."
+        tests:
+          - unique:
+              column_name: "(orders_id || '-' || pdt_id)"
+
+      - name: product
+        identifier: raw_product
+        description: "Données sur les produits vendus par Greenweez."
+        columns:
+          - name: products_id
+            description: "Identifiant unique du produit dans le catalogue de Greenweez."
+            tests:
+              - unique
+              - not_null
+          - name: purchase_price
+            description: "Prix d'achat du produit, tel que stocké dans les données brutes."
+
+      - name: ship
+        identifier: raw_gz_ship
+        description: "Données sur les frais de livraison et les coûts logistiques des commandes."
+        columns:
+          - name: orders_id
+            description: "Identifiant unique de la commande liée aux frais de livraison."
+            tests:
+              - unique
+              - not_null
+          - name: shipping_fee_1
+            description: "Frais de livraison facturés pour la commande."
+          - name: log_cost
+            description: "Coût logistique associé à l'expédition de la commande."
+          - name: ship_cost
+            description: "Coût total de l'expédition de la commande, après conversion en type numérique."
