@@ -10,7 +10,6 @@ ROUND(SUM(logcost),2) AS total_log_cost,
 ROUND(SUM(om.quantity),2) AS total_quantity
 
 FROM {{ref('int_orders_operational')}} oo
---LEFT JOIN avg_basket ab USING (orders_id)
 LEFT JOIN {{ref('int_orders_margin')}} om USING (orders_id)
 LEFT JOIN {{ref('stg_raw__ship')}} sp USING (orders_id)
 
